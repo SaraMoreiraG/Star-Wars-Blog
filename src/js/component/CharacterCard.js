@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Context } from '../store/appContext';
 import Button from 'react-bootstrap/Button';
@@ -7,47 +7,39 @@ import Card from 'react-bootstrap/Card';
 
 function CharacterCard( { id, name, url } ) {
 	const { store, actions } = useContext(Context);
+	const imgSrc = "https://starwars-visualguide.com/assets/img/characters/" + id + ".jpg"
 
 	useEffect (() => {
-		actions.getCharacter((url))
-		.then((x)=> console.log(x[0].gender) );
+		actions.getCharacteres((url))
 	}, []);
 
-	console.log(store.character)  // <---- WORKING
-	console.log(store.character[0])  // <---- WORKING
-	//console.log(store.character[0].gender)  // <---- NOT WORKING!!!
-	//store.characater.map(el=>console.log(el.gender))
-	//store.characater && store.characater.map(el=>console.log(el.gender))
-	//store.characater.map(el=>console.log(el))
-	//const charStore = store.character.filter(char => char.name == props.character.name);
+	const character = store.characteres.filter(character => character.name == name);
 
-  return (
-  <>
-    <Card className='p-0' style={{ width: '16rem' }}>
-      <Card.Img variant="top" src="https://via.placeholder.com/400x200" />
-      <Card.Body>
-        <Card.Title>{name}</Card.Title>
-			{/* <ul>
-			{store.character.map( character =>
-				<>
-				<li>Gender: {character.gender}</li>
-				<li>Hair Color: {character.hair_color}</li>
-				<li>Eye Color: {character.eye_color}</li>
-				</>
-			)}
-			</ul> */}
-          {/* <ul>
-              <li>Gender: {id}</li>
-              <li>Hair Color: unknow</li>
-              <li>Eye Color: unknow</li>
-          </ul> */}
-          <Link to='/description'>
-            <Button variant="primary">Go somewhere</Button>
-          </Link>
-      </Card.Body>
-    </Card>
-  </>
-  );
+	return (
+	<>
+		<Card className='p-0' style={{ width: '16rem' }}>
+			<Card.Img variant="top" src={imgSrc} />
+			<Card.Body>
+				<Card.Title>{name}</Card.Title>
+				{character.map( character =>
+					<>
+					<ul>
+						<li key={id}>Gender: {character.gender}</li>
+						<li>Hair Color: {character.hair_color}</li>
+						<li>Eye Color: {character.eye_color}</li>
+					</ul>
+					<Link to={'/description/' + character.name + '/' + id}>
+						<Button variant="outline-primary" className='mt-2'>Learn more!</Button>
+					</Link>
+					<Button variant="outline-warning" onClick={() => actions.saveFavorite({name})}>
+						<i className="fa-regular fa-heart"></i>
+					</Button>
+					</>
+				)}
+			</Card.Body>
+		</Card>
+	</>
+	);
 }
 
 export default CharacterCard;

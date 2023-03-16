@@ -2,9 +2,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			people: [],
-			character: [],
+			characteres: [],
 			vehicles: [],
 			planets: [],
+			favorites: [],
 		},
 
 		actions: {
@@ -24,14 +25,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.then(data => setStore({ planets: data.results }))
 			},
 
-			getCharacter: async (url) => {
+			getCharacteres: async (url) => {
 				const store = getStore();
 
 				fetch (url)
 				.then(response => response.json())
-				.then(data => setStore({ character: [...store.character, data.result.properties] }))
+				.then(data => setStore({ characteres: [...store.characteres, data.result.properties] }))
 
 			},
+
+			saveFavorite: (name) => {
+				const store = getStore();
+
+				setStore({favorites : [...store.favorites, name]});
+				this.innerText = 'More';
+			},
+
+			deleteFavorite: (key) => {
+				const store = getStore();
+				//const newlist = store.favorites
+
+				setStore(store.favorites.splice(key, 1));
+			}
 
 			// getCharacterDescription: async url => {
 			// 	const store = getStore();

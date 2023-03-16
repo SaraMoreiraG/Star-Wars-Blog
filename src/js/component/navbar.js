@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Context } from '../store/appContext';
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faTrash } from '@fortawesome/free-solid-svg-icons'
+import Dropdown from 'react-bootstrap/Dropdown';
 
 export const Navbar = () => {
+	const { store, actions } = useContext(Context);
+	const fav = store.favorites.length;
+
 	return (
 		<nav className="navbar navbar-dark bg-dark px-4">
 			<div className="nav-item dropdown">
@@ -21,13 +26,22 @@ export const Navbar = () => {
 			</div>
 			<Link to="/">
 			<div className="navbar-brand">
-				<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Star_Wars_Logo.svg/2560px-Star_Wars_Logo.svg.png" alt="Bootstrap" height="100" />
+				<img src="https://1000marcas.net/wp-content/uploads/2019/12/logo-StarWars.png" alt="Bootstrap" height="100" />
 			</div>
 			</Link>
 			<div className="ml-auto">
-				<Link to="/demo">
-					<button className="btn btn-primary">Favorites</button>
-				</Link>
+				<Dropdown>
+					<Dropdown.Toggle variant="primary" id="dropdown-basic">
+						Favorites <span className="bg-secondary p-1">{fav}</span>
+					</Dropdown.Toggle>
+					<Dropdown.Menu>
+						{store.favorites.map((favorite, key) =>
+						<>
+						<Dropdown.Item key={(key)} onClick={() => actions.deleteFavorite(key)}>{favorite.name} <FontAwesomeIcon icon={faTrash} /> </Dropdown.Item>
+						</>
+						)}
+					</Dropdown.Menu>
+				</Dropdown>
 			</div>
 		</nav>
 	);

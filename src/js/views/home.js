@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import CharacterCard from "../component/CharacterCard";
@@ -13,12 +13,12 @@ function Home () {
 			<div className="container">
 				<h2>Characters</h2>
 				<ul className="cards">
-					{store.people.map( character =>
+					{store.people.map( person =>
 						<CharacterCard
-							key = {character.uid}
-							id = {character.uid}
-							name = {character.name}
-							url = {character.url}
+							key = {person.uid}
+							id = {person.uid}
+							name = {person.name}
+							url = {person.url}
 						/>
 					)}
 				</ul>
