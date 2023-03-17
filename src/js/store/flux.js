@@ -4,7 +4,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			people: [],
 			characteres: [],
 			vehicles: [],
+			vehicle: [],
 			planets: [],
+			planetInfo: [],
 			favorites: [],
 		},
 
@@ -39,7 +41,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				fetch (url)
 				.then(response => response.json())
-				.then(data => setStore({ characteres: [...store.planets, data.result.properties] }));
+				.then(data => setStore({ planetInfo: [...store.planetInfo, data.result.properties] }));
 			},
 
 			saveFavorite: (name) => {

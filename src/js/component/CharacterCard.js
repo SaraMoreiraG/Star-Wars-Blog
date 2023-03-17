@@ -29,7 +29,7 @@ function CharacterCard( { id, name, url } ) {
 							<li>Eye Color: {character.eye_color}</li>
 						</ul>
 						<div className='d-flex justify-content-between'>
-							<Link to={'/description/' + character.name + '/' + id}>
+							<Link to={'/chardescription/' + character.name + '/' + id}>
 								<Button variant="outline-primary" className='mt-2'>
 									Learn more!
 								</Button>

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Context } from '../store/appContext';
 import Button from 'react-bootstrap/Button';
@@ -13,9 +13,8 @@ function PlanetCard( { id, name, url } ) {
 		actions.getPlanets((url))
 	}, []);
 
-	const planet = store.planets.filter(planet => planet.name == name);
-  // console.log(store.planets);
-  // console.log(planet);
+	const planet = store.planetInfo.filter(planet => planet.name == name);
+
 	return (
 	<>
 		<Card className='p-0 border border-0' style={{ width: '16rem' }}>
@@ -26,12 +25,11 @@ function PlanetCard( { id, name, url } ) {
 					<>
 					<div key={id}>
 						<ul>
-							<li>Gender: {planet.gender}</li>
-							<li>Hair Color: {planet.hair_color}</li>
-							<li>Eye Color: {planet.eye_color}</li>
+							<li>Population: {planet.population}</li>
+							<li>Terrain: {planet.terrain}</li>
 						</ul>
 						<div className='d-flex justify-content-between'>
-							<Link to={'/description/' + planet.name + '/' + id}>
+							<Link to={'/planetdescription/' + planet.name + '/' + id}>
 								<Button variant="outline-primary" className='mt-2'>
 									Learn more!
 								</Button>

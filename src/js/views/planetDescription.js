@@ -5,13 +5,12 @@ import { Context } from "../store/appContext";
 import { Button } from "react-bootstrap";
 
 
-export const Description = props => {
+export const PlanetDescription = props => {
 	const { store, actions } = useContext(Context);
 	const params = useParams();
 	const name = params.name;
-	const character = store.characteres.filter(character => character.name == params.name);
-	console.log(name)
-	const imgSrc = "https://starwars-visualguide.com/assets/img/characters/" + params.id + ".jpg"
+	const planet = store.planetInfo.filter(planet => planet.name == params.name);
+	const imgSrc = "https://starwars-visualguide.com/assets/img/planets/" + params.id + ".jpg"
 
 	return (
 		<div>
@@ -31,32 +30,32 @@ export const Description = props => {
 					</Button>
 				</div>
 			</div>
-			{character.map( character =>
+			{planet.map( planet =>
 			<>
 				<div className="row d-flex p-3 justify-content-center">
 					<div className="col-2">
 						<h3>Name</h3>
-						<p>{character.name}</p>
+						<p>{planet.name}</p>
 					</div>
 					<div className="col-2">
-						<h3>Birth Year</h3>
-						<p>{character.birth_year}</p>
+						<h3>Climate</h3>
+						<p>{planet.climate}</p>
 					</div>
 					<div className="col-2">
-						<h3>Gender</h3>
-						<p>{character.gender}</p>
+						<h3>Diameter</h3>
+						<p>{planet.diameter}</p>
 					</div>
 					<div className="col-2">
-						<h3>Height</h3>
-						<p>{character.height}</p>
+						<h3>Gravity</h3>
+						<p>{planet.gravity}</p>
 					</div>
 					<div className="col-2">
-						<h3>Skin Color</h3>
-						<p>{character.skin_color}</p>
+						<h3>Rotation period</h3>
+						<p>{planet.rotation_period}</p>
 					</div>
 					<div className="col-2">
-						<h3>Eye Color</h3>
-						<p>{character.eye_color}</p>
+						<h3>Terrain</h3>
+						<p>{planet.terrain}</p>
 					</div>
 				</div>
 			</>
