@@ -9,7 +9,7 @@ function Home () {
 	const { store, actions } = useContext(Context);
 
 	return (
-		<div className="body text-white bg-dark">
+		<div className="body text-white bg-dark mb-5">
 			<div className="container">
 				<h2>Characters</h2>
 				<ul className="cards">
@@ -34,7 +34,7 @@ function Home () {
 					)}
 				</ul>
 				<h2>Planets</h2>
-				<ul className="cards">
+				<ul className="cards pb-5">
 					{store.planets.map( planet =>
 						<PlanetCard
 							key = {planet.uid}
@@ -44,7 +44,7 @@ function Home () {
 						/>
 					)}
 				</ul>
-				</div>
+			</div>
 		</div>
 	)
 };

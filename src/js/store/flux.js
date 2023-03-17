@@ -30,8 +30,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				fetch (url)
 				.then(response => response.json())
-				.then(data => setStore({ characteres: [...store.characteres, data.result.properties] }))
+				.then(data => setStore({ characteres: [...store.characteres, data.result.properties] }));
 
+			},
+
+			getPlanets: async (url) => {
+				const store = getStore();
+
+				fetch (url)
+				.then(response => response.json())
+				.then(data => setStore({ characteres: [...store.planets, data.result.properties] }));
 			},
 
 			saveFavorite: (name) => {
@@ -43,27 +51,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			deleteFavorite: (key) => {
 				const store = getStore();
-				//const newlist = store.favorites
 
 				setStore(store.favorites.splice(key, 1));
 			}
-
-			// getCharacterDescription: async url => {
-			// 	const store = getStore();
-			// 	const settings = {
-			// 		method: "GET",
-			// 		headers: { "Content-Type": "application/json" }
-			// 	};
-
-			// 	const request = await fetch(url, settings);
-			// 	const json = await request.json();
-			// 	const data = json;
-			// 	setStore({ character: [...store.character, data.result.properties] });
-			// },
-
-			// charDescription: url => {
-			// 	getActions().getCharacterDescription(url);
-			// },
 		}
 	};
 };
