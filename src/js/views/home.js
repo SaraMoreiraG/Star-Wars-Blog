@@ -6,8 +6,10 @@ import VehicleCard from "../component/VehicleCard";
 import PlanetCard from "../component/PlanetCard";
 
 function Home () {
-	const { store, actions } = useContext(Context);
+	const { store } = useContext(Context);
 	const localPeople = JSON.parse(localStorage.getItem('people'));
+	const localVehicles = JSON.parse(localStorage.getItem('vehicles'));
+	const localPlanets = JSON.parse(localStorage.getItem('planets'));
 
 	return (
 		<div className="body text-white bg-dark mb-5">
@@ -23,18 +25,16 @@ function Home () {
 				</ul>
 				<h2>Vehicles</h2>
 				<ul className="cards">
-					{store && store.vehicles.map( vehicle =>
+					{localVehicles && localVehicles.map( vehicle =>
 						<VehicleCard
 							key = {vehicle.uid}
 							id = {vehicle.uid}
-							name = {vehicle.name}
-							url = {vehicle.url}
 						/>
 					)}
 				</ul>
 				<h2>Planets</h2>
 				<ul className="cards pb-5">
-					{store && store.planets.map( planet =>
+					{localPlanets && localPlanets.map( planet =>
 						<PlanetCard
 							key = {planet.uid}
 							id = {planet.uid}

@@ -18,9 +18,7 @@ const injectContext = PassedComponent => {
 		);
 
 		useEffect(() => {
-
-			if (localStorage.getItem('people') == null)
-				state.actions.loadData();
+			state.actions.checkLocalStorage();
 		}, [])
 
 		return (

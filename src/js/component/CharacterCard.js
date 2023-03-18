@@ -7,7 +7,8 @@ import Card from 'react-bootstrap/Card';
 
 function CharacterCard( { id } ) {
 	const imgSrc = "https://starwars-visualguide.com/assets/img/characters/" + id + ".jpg";
-	const { actions } = useContext(Context);
+	const { store, actions } = useContext(Context);
+	let fav = false;
 
 	useEffect (() => {
 		if (localStorage.getItem('Character' + id) == null)
@@ -15,6 +16,13 @@ function CharacterCard( { id } ) {
 	}, []);
 
 	const character = JSON.parse(localStorage.getItem(('Character' + id)));
+
+	if (character){
+		for (let i = 0; i < store.favorites.length; i++){
+			if (store.favorites[i] == character.name)
+				fav = true;
+		}
+	}
 
 	return (
 	<>
@@ -36,10 +44,14 @@ function CharacterCard( { id } ) {
 								Learn more!
 							</Button>
 						</Link>
-						<Button variant="outline-warning" className='mt-2'
+						{fav && <Button variant="outline-warning" className='mt-2'
+						onClick={() => actions.saveFavorite(character.name)}>
+							<i className="fa-solid fa-heart"></i>
+						</Button>}
+						{!fav && <Button variant="outline-warning" className='mt-2'
 						onClick={() => actions.saveFavorite(character.name)}>
 							<i className="fa-regular fa-heart"></i>
-						</Button>
+						</Button>}
 					</div>
 				</div>
 			</Card.Body>

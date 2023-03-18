@@ -4,21 +4,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 			people: [],
 			characteres: [],
 			vehicles: [],
-			vehicle: [],
+			vehicleInfo: [],
 			planets: [],
 			planetInfo: [],
-			favorites: [],
+			favorites: JSON.parse(localStorage.getItem('favorites'))
+
 		},
 
 		actions: {
-			loadData: async () => {
+			checkLocalStorage: () => {
 				const store = getStore();
 
-				// fetch('https://www.swapi.tech/api/people')
-				// .then(response => response.json())
-				// .then(data => setStore({ people: data.results }))
-				// .then(data => localStorage.setItem('people', JSON.stringify(data.results)));
+				if (localStorage.getItem('favorites') == null)
+					localStorage.setItem('favorites', JSON.stringify(['Empty']));
+				store.favorites = JSON.parse(localStorage.getItem('favorites'));
 
+				if (localStorage.getItem('people') == null)
+					getActions().loadPeople();
+				if (localStorage.getItem('vehicles') == null)
+					getActions().loadVehicles();
+				if (localStorage.getItem('planets') == null)
+					getActions().loadPlanets();
+			},
+
+			loadPeople: async () => {
 				try {
 					const response = await fetch(
 						'https://www.swapi.tech/api/people'
@@ -29,18 +38,38 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (err) {
 					console.log(err);
 				}
-				fetch('https://www.swapi.tech/api/vehicles')
-				.then(response => response.json())
-				.then(data => setStore({ vehicles: data.results }))
+			},
 
+			loadVehicles: async () => {
+				try {
+					const response = await fetch(
+						'https://www.swapi.tech/api/vehicles'
+					);
+					const data = await response.json();
+					localStorage.setItem('vehicles', JSON.stringify(data.results));
+					setStore({ vehicles: data.results});
+				} catch (err) {
+					console.log(err);
+				}
+			},
+
+			loadPlanets: async () => {
+				try {
+					const response = await fetch (
+						'https://www.swapi.tech/api/planets'
+					);
+					const data = await response.json();
+					localStorage.setItem('planets', JSON.stringify(data.results));
+					setStore({ planets: data.results });
+				} catch(err){
+					console.log(err);
+				}
 				// fetch('https://www.swapi.tech/api/planets')
 				// .then(response => response.json())
 				// .then(data => setStore({ planets: data.results }))
 			},
 
 			getCharacteres: async (id) => {
-				const store = getStore();
-
 				try {
 					const response = await fetch(
 						'https://www.swapi.tech/api/people/' + id
@@ -54,25 +83,73 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 
-			// getPlanets: async (url) => {
-			// 	const store = getStore();
+			getVehicle: async (id) => {
+				try {
+					const response = await fetch (
+						'https://www.swapi.tech/api/vehicles/' + id
+					);
+					const data = await response.json();
+					localStorage.setItem(('Vehicle' + id), JSON.stringify(data.result.properties));
+					setStore({ vehicleInfo: data.results });
+				} catch (err) {
+					console.log(err);
+				}
+			},
 
-			// 	fetch (url)
-			// 	.then(response => response.json())
-			// 	.then(data => setStore({ planetInfo: [...store.planetInfo, data.result.properties] }));
-			// },
+			getPlanet: async (id) => {
+				try {
+					const response = await fetch (
+						'https://www.swapi.tech/api/planets/' + id
+					);
+					const data = await response.json();
+					localStorage.setItem(('Planet' + id), JSON.stringify(data.result.properties));
+					setStore({ planetInfo: data.results });
+				} catch (err) {
+					console.log(err);
+				}
+				// const store = getStore();
+
+				// fetch (url)
+				// .then(response => response.json())
+				// .then(data => setStore({ planetInfo: [...store.planetInfo, data.result.properties] }));
+			},
 
 			saveFavorite: (name) => {
-				const store = getStore();
+				const localFavorites = JSON.parse(localStorage.getItem('favorites'));
+				let i;
+				let alreadyFav = false;
 
-				setStore({favorites : [...store.favorites, name]});
-				this.innerText = 'More';
+				if (localFavorites[0] == 'Empty')
+					localFavorites.splice(0, 1);
+
+				for (i = 0; i < localFavorites.length; i++){
+					if (localFavorites[i] === name){
+						alreadyFav = true;
+						break;
+					}
+				}
+
+				if (alreadyFav)
+					localFavorites.splice(i, 1)
+				else
+					localFavorites.push(name);
+
+				if (localFavorites.length == 0)
+					localFavorites.push('Empty');
+
+				localStorage.setItem('favorites', JSON.stringify(localFavorites));
+				setStore({favorites: JSON.parse(localStorage.getItem('favorites'))})
 			},
 
 			deleteFavorite: (key) => {
-				const store = getStore();
+				const localFavorites = JSON.parse(localStorage.getItem('favorites'));
 
-				setStore(store.favorites.splice(key, 1));
+				localFavorites.splice(key, 1);
+				if (localFavorites.length == 0)
+					localFavorites.push('Empty');
+
+				localStorage.setItem('favorites', JSON.stringify(localFavorites));
+				setStore({favorites: JSON.parse(localStorage.getItem('favorites'))})
 			}
 		}
 	};

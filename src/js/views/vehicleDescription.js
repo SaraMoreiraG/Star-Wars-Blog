@@ -5,15 +5,15 @@ import { Context } from "../store/appContext";
 import { Button } from "react-bootstrap";
 
 
-export const PlanetDescription = props => {
+export const VehicleDescription = props => {
 	const { store, actions } = useContext(Context);
 	const params = useParams();
-	const planet = JSON.parse(localStorage.getItem('Planet' + params.id));
+	const vehicle = JSON.parse(localStorage.getItem('Vehicle' + params.id));
 	let fav = false;
 
-	if (planet){
+	if (vehicle){
 		for (let i = 0; i < store.favorites.length; i++){
-			if (store.favorites[i] == planet.name)
+			if (store.favorites[i] == vehicle.name)
 				fav = true;
 		}
 	}
@@ -22,7 +22,7 @@ export const PlanetDescription = props => {
 		<div>
 			<div className="d-flex justify-content-center align-items-center p-3">
 				<div>
-					<img src={"https://starwars-visualguide.com/assets/img/planets/" + params.id + ".jpg"} />
+					<img src={"https://starwars-visualguide.com/assets/img/vehicles/" + params.id + ".jpg"} />
 				</div>
 				<div className="col-3 text-center ms-3">
 					<h1>{params.name}</h1>
@@ -32,11 +32,11 @@ export const PlanetDescription = props => {
 						ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia
 						consequuntur magni dolores eos qui ratione voluptatem sequi</p>
 					{fav && <Button variant="outline-warning" className='mt-2'
-						onClick={() => actions.saveFavorite(planet.name)}>
+						onClick={() => actions.saveFavorite(vehicle.name)}>
 							<i className="fa-solid fa-heart"></i>
 						</Button>}
 					{!fav && <Button variant="outline-warning" className='mt-2'
-						onClick={() => actions.saveFavorite(planet.name)}>
+						onClick={() => actions.saveFavorite(vehicle.name)}>
 							<i className="fa-regular fa-heart"></i>
 						</Button>}
 				</div>
@@ -44,27 +44,27 @@ export const PlanetDescription = props => {
 			<div className="row d-flex p-3 justify-content-center">
 				<div className="col-2">
 					<h3>Name</h3>
-					<p>{planet.name}</p>
+					<p>{vehicle.name}</p>
 				</div>
 				<div className="col-2">
-					<h3>Climate</h3>
-					<p>{planet.climate}</p>
+					<h3>Model</h3>
+					<p>{vehicle.model}</p>
 				</div>
 				<div className="col-2">
-					<h3>Diameter</h3>
-					<p>{planet.diameter}</p>
+					<h3>Pass</h3>
+					<p>{vehicle.passengers}</p>
 				</div>
 				<div className="col-2">
-					<h3>Gravity</h3>
-					<p>{planet.gravity}</p>
+					<h3>Crew</h3>
+					<p>{vehicle.crew}</p>
 				</div>
 				<div className="col-2">
-					<h3>Population</h3>
-					<p>{planet.population}</p>
+					<h3>Length</h3>
+					<p>{vehicle.length}</p>
 				</div>
 				<div className="col-2">
-					<h3>Orbit</h3>
-					<p>{planet.orbital_period}</p>
+					<h3>Max speed</h3>
+					<p>{vehicle.max_atmosphering_speed}</p>
 				</div>
 			</div>
 		</div>

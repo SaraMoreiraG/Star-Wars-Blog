@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from '../store/appContext';
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -7,7 +7,17 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 export const Navbar = () => {
 	const { store, actions } = useContext(Context);
-	const fav = store.favorites.length;
+	let fav;
+	let trash;
+
+	if (store.favorites){
+		if (store.favorites[0] === 'Empty')
+			fav = 0;
+		else{
+			trash = <FontAwesomeIcon icon={faTrash} />
+			fav = store.favorites.length;
+		}
+	}
 
 	return (
 		<nav className="navbar navbar-dark bg-dark px-4">
@@ -32,12 +42,24 @@ export const Navbar = () => {
 			<div className="ml-auto">
 				<Dropdown>
 					<Dropdown.Toggle variant="primary" id="dropdown-basic">
-						Favorites <span className="bg-secondary p-1">{fav}</span>
+						Favorites
+						<span className="bg-secondary rounded ms-1 p-1">{fav}</span>
 					</Dropdown.Toggle>
 					<Dropdown.Menu>
-						{store.favorites.map((favorite, key) =>
+						{store.favorites && store.favorites.map( (favorite, key) =>
 						<>
-						<Dropdown.Item key={(key)} onClick={() => actions.deleteFavorite(key)}>{favorite.name} <FontAwesomeIcon icon={faTrash} /> </Dropdown.Item>
+							<Dropdown.Item
+								key={key}
+								className="d-flex"
+								onClick={() => actions.deleteFavorite(key)}>
+									<div className="me-1">
+										{favorite}
+									</div>
+									<div className="ms-auto">
+										{trash}
+									</div>
+
+							</Dropdown.Item>
 						</>
 						)}
 					</Dropdown.Menu>

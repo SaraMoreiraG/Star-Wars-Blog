@@ -8,6 +8,7 @@ import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { CharDescription } from "./views/charDescription";
+import { VehicleDescription } from "./views/vehicleDescription";
 import { PlanetDescription } from "./views/planetDescription";
 
 const Layout = () => {
@@ -21,6 +22,8 @@ const Layout = () => {
 					<Routes>
 						<Route path="/" element={<Home />} />
 						<Route path="/chardescription/:name/:id" element={<CharDescription />} />
+						<Route path="/vehicledescription/:name/:id" element={<VehicleDescription />} />
+						<Route path="/planetdescription/:name/:id" element={<PlanetDescription />} />
 						<Route path="/planetdescription/:name/:id" element={<PlanetDescription />} />
 					</Routes>
 					<Footer />

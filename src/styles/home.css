@@ -51,7 +51,7 @@ ul{
 
   /* .card .card-link-wrapper {
 	margin-top: auto;
-  }
+  } */
 
   .card .card-link {
 	display: inline-block;
@@ -63,7 +63,7 @@ ul{
 	transition: background 0.2s;
   }
 
-  .card:hover .card-link {
+  /*.card:hover .card-link {
 	background: var(--darkred);
   }
 

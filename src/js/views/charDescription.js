@@ -6,9 +6,17 @@ import { Button } from "react-bootstrap";
 
 
 export const CharDescription = props => {
-	const { actions } = useContext(Context);
+	const { store, actions } = useContext(Context);
 	const params = useParams();
 	const character = JSON.parse(localStorage.getItem('Character' + params.id));
+	let fav = false;
+
+	if (character){
+		for (let i = 0; i < store.favorites.length; i++){
+			if (store.favorites[i] == character.name)
+				fav = true;
+		}
+	}
 
 	return (
 		<div>
@@ -23,9 +31,14 @@ export const CharDescription = props => {
 						veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim
 						ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia
 						consequuntur magni dolores eos qui ratione voluptatem sequi</p>
-					<Button variant="outline-warning" className='mt-2' onClick={() => actions.saveFavorite({name})}>
+					{fav && <Button variant="outline-warning" className='mt-2'
+						onClick={() => actions.saveFavorite(character.name)}>
+							<i className="fa-solid fa-heart"></i>
+						</Button>}
+					{!fav && <Button variant="outline-warning" className='mt-2'
+						onClick={() => actions.saveFavorite(character.name)}>
 							<i className="fa-regular fa-heart"></i>
-					</Button>
+						</Button>}
 				</div>
 			</div>
 			<div className="row d-flex p-3 justify-content-center">
