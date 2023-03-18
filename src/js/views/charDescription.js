@@ -6,18 +6,15 @@ import { Button } from "react-bootstrap";
 
 
 export const CharDescription = props => {
-	const { store, actions } = useContext(Context);
+	const { actions } = useContext(Context);
 	const params = useParams();
-	const name = params.name;
-	const character = store.characteres.filter(character => character.name == params.name);
-	console.log(name)
-	const imgSrc = "https://starwars-visualguide.com/assets/img/characters/" + params.id + ".jpg"
+	const character = JSON.parse(localStorage.getItem('Character' + params.id));
 
 	return (
 		<div>
 			<div className="d-flex justify-content-center align-items-center p-3">
 				<div>
-					<img src={imgSrc} />
+					<img src={"https://starwars-visualguide.com/assets/img/characters/" + params.id + ".jpg"} />
 				</div>
 				<div className="col-3 text-center ms-3">
 					<h1>{params.name}</h1>
@@ -31,36 +28,32 @@ export const CharDescription = props => {
 					</Button>
 				</div>
 			</div>
-			{character.map( character =>
-			<>
-				<div className="row d-flex p-3 justify-content-center">
-					<div className="col-2">
-						<h3>Name</h3>
-						<p>{character.name}</p>
-					</div>
-					<div className="col-2">
-						<h3>Birth Year</h3>
-						<p>{character.birth_year}</p>
-					</div>
-					<div className="col-2">
-						<h3>Gender</h3>
-						<p>{character.gender}</p>
-					</div>
-					<div className="col-2">
-						<h3>Height</h3>
-						<p>{character.height}</p>
-					</div>
-					<div className="col-2">
-						<h3>Skin Color</h3>
-						<p>{character.skin_color}</p>
-					</div>
-					<div className="col-2">
-						<h3>Eye Color</h3>
-						<p>{character.eye_color}</p>
-					</div>
+			<div className="row d-flex p-3 justify-content-center">
+				<div className="col-2">
+					<h3>Name</h3>
+					<p>{character.name}</p>
 				</div>
-			</>
-			)}
+				<div className="col-2">
+					<h3>Birth Year</h3>
+					<p>{character.birth_year}</p>
+				</div>
+				<div className="col-2">
+					<h3>Gender</h3>
+					<p>{character.gender}</p>
+				</div>
+				<div className="col-2">
+					<h3>Height</h3>
+					<p>{character.height}</p>
+				</div>
+				<div className="col-2">
+					<h3>Skin Color</h3>
+					<p>{character.skin_color}</p>
+				</div>
+				<div className="col-2">
+					<h3>Eye Color</h3>
+					<p>{character.eye_color}</p>
+				</div>
+			</div>
 		</div>
 	);
 };
